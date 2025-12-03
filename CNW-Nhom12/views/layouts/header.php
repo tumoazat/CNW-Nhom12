@@ -54,6 +54,7 @@
                             
                             <li class="user-menu">
                                 <span>Xin chào, <?php echo htmlspecialchars($_SESSION['fullname']); ?></span>
+                                <a href="index.php?controller=auth&action=profile">Tài khoản</a>
                                 <a href="index.php?controller=auth&action=logout" class="btn-logout">Đăng xuất</a>
                             </li>
                         <?php else: ?>

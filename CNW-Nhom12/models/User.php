@@ -161,4 +161,79 @@ class User
         }
         return false;
     }
+    
+    /**
+     * Cập nhật avatar
+     */
+    public function cậpNhậtAvatar($id, $avatar_filename)
+    {
+        $câu_truy_vấn = "UPDATE " . $this->tên_bảng . " 
+                        SET avatar = :avatar 
+                        WHERE id = :id";
+        
+        $stmt = $this->kết_nối->prepare($câu_truy_vấn);
+        $stmt->bindParam(':avatar', $avatar_filename);
+        $stmt->bindParam(':id', $id);
+        
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Đổi mật khẩu
+     */
+    public function đổiMậtKhẩu($id, $mật_khẩu_mới)
+    {
+        $mật_khẩu_đã_mã_hóa = password_hash($mật_khẩu_mới, PASSWORD_BCRYPT);
+        
+        $câu_truy_vấn = "UPDATE " . $this->tên_bảng . " 
+                        SET password = :password 
+                        WHERE id = :id";
+        
+        $stmt = $this->kết_nối->prepare($câu_truy_vấn);
+        $stmt->bindParam(':password', $mật_khẩu_đã_mã_hóa);
+        $stmt->bindParam(':id', $id);
+        
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Kiểm tra email đã tồn tại chưa
+     */
+    public function kiểmTraEmailTồnTại($email)
+    {
+        $câu_truy_vấn = "SELECT id FROM " . $this->tên_bảng . " WHERE email = :email LIMIT 1";
+        
+        $stmt = $this->kết_nối->prepare($câu_truy_vấn);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        
+        return $stmt->rowCount() > 0;
+    }
+    
+    /**
+     * Cập nhật thông tin profile
+     */
+    public function cậpNhậtProfile($id, $fullname, $email, $phone)
+    {
+        $câu_truy_vấn = "UPDATE " . $this->tên_bảng . " 
+                        SET fullname = :fullname, email = :email, phone = :phone 
+                        WHERE id = :id";
+        
+        $stmt = $this->kết_nối->prepare($câu_truy_vấn);
+        $stmt->bindParam(':fullname', $fullname);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':id', $id);
+        
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }
