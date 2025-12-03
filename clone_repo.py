@@ -7,6 +7,33 @@ This script provides functionality to clone Git repositories.
 import os
 import sys
 import subprocess
+import re
+
+
+def is_valid_git_url(url):
+    """
+    Validate if the provided string is a valid Git repository URL.
+    
+    Args:
+        url (str): The URL to validate
+    
+    Returns:
+        bool: True if URL is valid, False otherwise
+    """
+    # Pattern for common Git URL formats
+    # Supports: https://, http://, git://, ssh (git@), and file://
+    git_url_pattern = re.compile(
+        r'^(https?://|git://|git@|file://|ssh://)'
+        r'[^\s;|&$()<>]+\.git$|'
+        r'^(https?://|git://|git@|file://|ssh://)'
+        r'[^\s;|&$()<>]+$'
+    )
+    
+    # Check for potentially dangerous characters
+    if any(char in url for char in [';', '|', '&', '$', '(', ')', '<', '>', '`', '\n', '\r']):
+        return False
+    
+    return bool(git_url_pattern.match(url))
 
 
 def clone_repository(repo_url, destination=None):
@@ -20,6 +47,11 @@ def clone_repository(repo_url, destination=None):
     Returns:
         bool: True if cloning was successful, False otherwise
     """
+    # Validate the repository URL
+    if not is_valid_git_url(repo_url):
+        print(f"Error: Invalid or potentially unsafe repository URL: {repo_url}", file=sys.stderr)
+        return False
+    
     try:
         # Build the clone command
         cmd = ["git", "clone", repo_url]
