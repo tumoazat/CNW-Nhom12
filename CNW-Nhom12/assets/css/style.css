@@ -6,12 +6,15 @@
 }
 
 body {
-    font-family: 'Orbitron', 'Rajdhani', 'Share Tech Mono', monospace;
-    line-height: 1.6;
+    font-family: 'Nunito', 'Roboto', 'Segoe UI', sans-serif;
+    line-height: 1.7;
     color: #00ffff;
     background: #0d0221;
     position: relative;
     overflow-x: hidden;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
 }
 
 /* Cyberpunk Background with Neon Grid */
@@ -87,7 +90,7 @@ body::after {
     display: block;
     pointer-events: none;
     color: #ff00ff;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Courier New', monospace;
     font-size: 16px;
     animation: floatCode 25s infinite linear;
     text-shadow: 
@@ -960,19 +963,76 @@ body::after {
     width: 100%;
 }
 
-/* Category Card */
+/* Category Card - Dark Developer Theme */
 .category-card {
-    background: rgba(255, 255, 255, 0.95);
+    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 
+                0 0 30px rgba(0, 255, 136, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
     text-align: center;
     backdrop-filter: blur(10px);
-    transition: transform 0.3s;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.category-card:hover::before {
+    left: 100%;
 }
 
 .category-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 
+                0 0 40px rgba(0, 255, 136, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(0, 255, 136, 0.5);
+}
+
+.category-card h3 {
+    color: #00ff88;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+}
+
+.category-card p {
+    color: #a0aec0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+}
+
+.category-card .btn {
+    background: linear-gradient(135deg, #00b4db 0%, #0083b0 100%);
+    color: #ffffff;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 180, 219, 0.3);
+}
+
+.category-card .btn:hover {
+    background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 180, 219, 0.5);
 }
 
 /* Auth Forms */
